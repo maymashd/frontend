@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+  <header>
+    <h1>Welcome to JoinedIn!</h1>
+    <input type="submit" name="commit" value="Logout" onclick="location.href='index.html';">
+  </header>
+  
+    <ng-container *ngIf="!loading">
+           Loading...
+    </ng-container>
+
+  <div *ngIf="isLogged">
+  
+      <div *ngIf="groupList">
+          <div *ngFor="let p of groups" (click)="getGroup(p)" >id:  {{p.id}}  name of group: {{p.name}} </div> 
+      </div>
+
+      <div *ngIf="groupDetail">
+        <span> id: {{group.id}} name: {{group.name}} phone: {{group.phone}} </span>
+          <div *ngIf="!InGroup">
+              <button (click)="joinToGroup(group)">Join to this group</button>
+          </div>
+
+          <div *ngFor="let a of group.posts" *ngIf="InGroup" (click)="postDetail(a)">
+              <span > {{a.title}}  <br> {{a.body}}  </span>
+              <span> author: {{a.createtBy}}  created: {{a.createdAt}}   </span>
+              <span> Likes: {{a.likeCount}}     </span>
+              <button (click)="liked(a)">like</button>
+              <input type="text" [(ngModel)]="answer"/>
+              <button (click)="comment()">Comment</button>              
+          </div>
+      </div>
+
+      <div *ngIf="postDetail">
+          <span>  title: {{post.title}} <br> {{post.body}}  </span>
+            <div *ngFor="let a of post.comments"  (click)="commentDetail(a)">
+                <span >  {{a.body}}  </span>
+                <span> author: {{a.createtBy}}  created: {{a.createdAt}}   </span>
+                <span> Likes: {{a.likeCount}}     </span>
+                <button (click)="liked(a)">like</button>
+                <input type="text" [(ngModel)]="answer"/>
+                <button (click)="comment()">Comment</button>              
+            </div>
+        </div>
+
+  
+  </div>
+
+
+</body>
+</html>
